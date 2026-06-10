@@ -99,19 +99,9 @@ Html5Qrcode.getCameras()
 
                     if(codigo){
 
-                        if(codigo){
-                        
-                            if(window.opener){
-                        
-                                window.opener.location.href =
-                                "https://script.google.com/macros/s/AKfycby76kspyi3WEs4wQBYo3CM-dDCuCkk3NYtHhTuRm8MbTMb7_JEG8pKvTreLqD6x_WEziw/exec?codigo="
-                                + codigo;
-                        
-                            }
-                        
-                            window.close();
-                        
-                        }
+                        window.location.href =
+                        "https://script.google.com/macros/s/AKfycby76kspyi3WEs4wQBYo3CM-dDCuCkk3NYtHhTuRm8MbTMb7_JEG8pKvTreLqD6x_WEziw/exec?codigo="
+                        + codigo;
 
                     }
 
@@ -153,4 +143,4 @@ Html5Qrcode.getCameras()
 </script>
 
 </body>
-</html>    
+</html>
