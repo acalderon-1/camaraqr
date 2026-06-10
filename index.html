@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Escáner QR</title>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            text-align:center;
+            background:#f2f2f2;
+        }
+
+        h1{
+            color:#003366;
+        }
+
+        #reader{
+            width:320px;
+            margin:auto;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h1>📷 Escanear QR</h1>
+
+<div id="reader"></div>
+
+<script>
+
+function iniciarScanner(){
+
+    const html5QrCode = new Html5Qrcode("reader");
+
+    Html5Qrcode.getCameras()
+    .then(cameras => {
+
+        if(cameras && cameras.length){
+
+            html5QrCode.start(
+                cameras[0].id,
+                {
+                    fps:10,
+                    qrbox:250
+                },
+
+                function(decodedText){
+
+                    alert("QR leído:\n" + decodedText);
+
+                    html5QrCode.stop();
+
+                },
+
+                function(errorMessage){
+                    // ignorar
+                }
+
+            );
+
+        }
+
+    })
+    .catch(err => {
+
+        alert("Error cámara:\n" + err);
+
+    });
+
+}
+
+iniciarScanner();
+
+</script>
+
+</body>
+</html>
