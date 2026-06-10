@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <meta charset="UTF-8">
     <title>Escáner QR - Asistencia</title>
 
@@ -81,25 +82,41 @@ Html5Qrcode.getCameras()
             },
 
             {
-                fps:10,
-                qrbox:250
+                fps: 10,
+                qrbox: 250
             },
 
             function(decodedText){
 
                 html5QrCode.stop();
 
-                // abrir automáticamente la URL del QR
-                const url = new URL(decodedText);
+                try{
 
-                const codigo = url.searchParams.get("codigo");
-                
-                if (codigo) {
-                
-                  window.location.href =
-                    "https://script.google.com/macros/s/AKfycbyBT1ZniN53Dg8VxGA5_d3EfH3kNi_8Vk6v2ZiYw-4mt1mypMeaFnRRkh4JUU6cWPoonw/exec"
-                    + codigo;
-                
+                    const url = new URL(decodedText);
+
+                    const codigo =
+                        url.searchParams.get("codigo");
+
+                    if(codigo){
+
+                        window.location.href =
+                        "https://script.google.com/macros/s/AKfycbxYU2sKL6flJ4Wn3JGhRvF1Z5rgxzIoi2HVeciHD2_N7VKEg2pZ5IDJZRPiRWvJLA7S4w/exec?codigo="
+                        + codigo;
+
+                    }
+
+                    else{
+
+                        alert("El QR no contiene un parámetro código.");
+
+                    }
+
+                }
+
+                catch(error){
+
+                    alert("QR inválido.");
+
                 }
 
             },
@@ -126,4 +143,4 @@ Html5Qrcode.getCameras()
 </script>
 
 </body>
-</html>
+</html>    
