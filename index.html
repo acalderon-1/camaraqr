@@ -99,9 +99,19 @@ Html5Qrcode.getCameras()
 
                     if(codigo){
 
-                        window.location.href =
-                        "https://script.google.com/macros/s/AKfycbxYU2sKL6flJ4Wn3JGhRvF1Z5rgxzIoi2HVeciHD2_N7VKEg2pZ5IDJZRPiRWvJLA7S4w/exec?codigo="
-                        + codigo;
+                        if(codigo){
+                        
+                            if(window.opener){
+                        
+                                window.opener.location.href =
+                                "https://script.google.com/macros/s/AKfycby76kspyi3WEs4wQBYo3CM-dDCuCkk3NYtHhTuRm8MbTMb7_JEG8pKvTreLqD6x_WEziw/exec?codigo="
+                                + codigo;
+                        
+                            }
+                        
+                            window.close();
+                        
+                        }
 
                     }
 
