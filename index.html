@@ -1,25 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Escáner QR</title>
+    <meta charset="UTF-8">
+    <title>Escáner QR - Asistencia</title>
 
     <script src="https://unpkg.com/html5-qrcode"></script>
 
     <style>
 
         body{
-            font-family:Arial;
-            text-align:center;
-            background:#f2f2f2;
+            margin:0;
+            background:#f0f2f5;
+            font-family:Arial,sans-serif;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
         }
 
-        h1{
+        .card{
+            background:white;
+            padding:30px;
+            width:350px;
+            border-radius:10px;
+            box-shadow:0 2px 10px rgba(0,0,0,.15);
+            text-align:center;
+        }
+
+        h2{
             color:#003366;
         }
 
         #reader{
-            width:320px;
+            width:300px;
             margin:auto;
+        }
+
+        .mensaje{
+            margin-top:20px;
+            color:#666;
+            font-size:14px;
         }
 
     </style>
@@ -28,54 +48,80 @@
 
 <body>
 
-<h1>📷 Escanear QR</h1>
+<div class="card">
 
-<div id="reader"></div>
+    <h2>📷 Escanear Código QR</h2>
+
+    <p>
+        Coloca el código QR frente a la cámara.
+    </p>
+
+    <div id="reader"></div>
+
+    <div class="mensaje">
+        Sistema de Asistencia - Tecsup
+    </div>
+
+</div>
 
 <script>
 
-function iniciarScanner(){
+const html5QrCode = new Html5Qrcode("reader");
 
-    const html5QrCode = new Html5Qrcode("reader");
+Html5Qrcode.getCameras()
 
-    Html5Qrcode.getCameras()
-    .then(cameras => {
+.then(cameras => {
 
-        if(cameras && cameras.length){
+    if(cameras && cameras.length){
 
-            html5QrCode.start(
-                cameras[0].id,
-                {
-                    fps:10,
-                    qrbox:250
-                },
+        html5QrCode.start(
 
-                function(decodedText){
+            {
+                facingMode: "environment"
+            },
 
-                    alert("QR leído:\n" + decodedText);
+            {
+                fps:10,
+                qrbox:250
+            },
 
-                    html5QrCode.stop();
+            function(decodedText){
 
-                },
+                html5QrCode.stop();
 
-                function(errorMessage){
-                    // ignorar
+                // abrir automáticamente la URL del QR
+                const url = new URL(decodedText);
+
+                const codigo = url.searchParams.get("codigo");
+                
+                if (codigo) {
+                
+                  window.location.href =
+                    "https://script.google.com/macros/s/AKfycbyBT1ZniN53Dg8VxGA5_d3EfH3kNi_8Vk6v2ZiYw-4mt1mypMeaFnRRkh4JUU6cWPoonw/exec"
+                    + codigo;
+                
                 }
 
-            );
+            },
 
-        }
+            function(errorMessage){
+                // ignorar errores de lectura
+            }
 
-    })
-    .catch(err => {
+        );
 
-        alert("Error cámara:\n" + err);
+    }
 
-    });
+})
 
-}
+.catch(error => {
 
-iniciarScanner();
+    alert(
+        "No se pudo acceder a la cámara.\n\n" +
+        error
+    );
+
+});
 
 </script>
 
